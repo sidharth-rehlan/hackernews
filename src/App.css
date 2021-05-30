@@ -1,0 +1,24 @@
+:root {
+  --orange: #ff7100;
+  --grey: grey;
+}
+
+.App {
+  text-align: center;
+}
+
+body {
+  margin: auto;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 1.5rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
