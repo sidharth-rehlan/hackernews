@@ -1,6 +1,7 @@
 :root {
   --orange: #ff7100;
   --grey: grey;
+  --darkOrange: #ff3300;
 }
 
 .App {
@@ -21,4 +22,28 @@ main {
 
 section {
   margin-bottom: 2rem;
+}
+
+.pagination {
+  justify-content: flex-end;
+  display: flex;
+}
+.pagination a {
+  color: var(--orange);
+  padding: 0 1.3em;
+  font-size: 1em;
+}
+
+.pagination a:hover {
+  color: var(--darkOrange);
+  font-weight: 700;
+}
+
+.pagination a.--disable {
+  color: var(--grey);
+}
+
+.pagination a.--disable:hover {
+  color: var(--grey);
+  font-weight: 400;
 }
