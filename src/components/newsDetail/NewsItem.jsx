@@ -1,47 +1,48 @@
 import React from "react";
-import { timeSince } from "../../helper";
+import moment from "moment";
 
 function NewsItem(props) {
-  const source = props.source
-    ? props.source.match(
-        /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/
-      )[1]
-    : null;
+  console.log("render ....news item......");
 
-  //const timeZoneDiff = 5.5 * 60 * 60 * 1000;
-  const formatedTime = timeSince(new Date(props.createdAt));
+  const { num_comments, title, author, url, created_at, id, voteUp } =
+    props.news;
+
+  const source = url
+    ? url.match(/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/)[1]
+    : null;
+  const formatedTime = moment(new Date(created_at)).fromNow();
 
   return (
     <tr>
       <td>{props.sno}</td>
-      <td>{props.comments}</td>
-      <td>{props.voteUp}</td>
+      <td>{num_comments}</td>
+      <td>{voteUp}</td>
       <td className="newsItem-voteUp-td">
         <a
           className="newsItem-voteUp-button"
           role="button"
           onClick={() => {
-            props.onVoteUp(props.id);
+            props.onVoteUp(id);
           }}
         ></a>
       </td>
       <td>
-        {props.detail}
+        {title}
         <span className="newsItem-source-url">({source})</span>
-        <span className="newsItem-author"> by {props.author}</span>
+        <span className="newsItem-author"> by {author}</span>
         <span className="newsItem-time"> {formatedTime} ago</span>
-        <span
+        <a
           role="button"
           className="newsItem-hide"
           onClick={() => {
-            props.onHideNews(props.id);
+            props.onHideNews(id);
           }}
         >
           [Hide]
-        </span>
+        </a>
       </td>
     </tr>
   );
 }
 
-export default NewsItem;
+export default React.memo(NewsItem);

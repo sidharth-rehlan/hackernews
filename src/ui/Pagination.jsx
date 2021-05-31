@@ -7,6 +7,7 @@ function Pagination(props) {
   return (
     <div className="pagination">
       <Link
+        className={currentPage === 0 ? "pagination--disable" : null}
         to={{
           pathname: "/",
           search: `?page=${currentPage - 1}`,
@@ -15,6 +16,9 @@ function Pagination(props) {
         &#60;&#60; Previous
       </Link>
       <Link
+        className={
+          currentPage === numberOfPages - 1 ? "pagination--disable" : null
+        }
         to={{
           pathname: "/",
           search: `?page=${currentPage + 1}`,

@@ -1,19 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { useLocation } from "react-router";
 import axios from "axios";
 
 import NewsDetail from "../components/newsDetail";
 import UpVoteChart from "../components/upVoteChart/UpVoteChart";
+import Loader from "../ui/Loader";
 import config from "../config";
+import Tabs from "../components/tabs/Tabs";
 
 function Home() {
   const [pagination, setPagination] = useState({});
   const [news, setNews] = useState([]);
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("newsList");
+  const [loading, setLoading] = useState(false);
 
+  const page =
+    location.search !== ""
+      ? new URLSearchParams(location.search).get("page")
+      : null;
+
+  const pageQuery = useMemo(() => {
+    return page !== null ? `&page=${page}` : null;
+  }, [page]);
+
+  /**
+   * Fetching news feed
+   * @returns
+   */
   const fetchNewsFeed = async () => {
-    const response = await axios.get(`${config.baseUrl}${config.newsFeed}`);
-    console.log("response....", response);
+    setLoading(true);
+    const response = await axios.get(
+      `${config.baseUrl}${config.newsFeed}${pageQuery}`
+    );
     if (response.status === 200) {
-      console.log(response);
+      setLoading(false);
       return response.data;
     }
   };
@@ -26,58 +47,93 @@ function Home() {
     let voteData = storedVoteData === null ? {} : JSON.parse(storedVoteData);
 
     const data = await fetchNewsFeed();
-    console.log(data);
     setPagination({ currentPage: data.page, numberOfPages: data.nbPages });
 
     const newsData = data.hits.map((hit) => {
       const id = hit.objectID;
+      const { url, created_at, title, author, num_comments } = hit;
       return {
-        url: hit.url,
-        created_at: hit.created_at,
-        points: hit.points,
-        title: hit.title,
-        id: id,
-        author: hit.author,
+        url,
+        created_at,
+        num_comments,
+        title,
+        id,
+        author,
         isHide: !!hideData[id],
-        voteUp: voteData[id] ? parseInt(voteData[id]) : 1,
+        voteUp: voteData[id] ? parseInt(voteData[id]) : hit.points,
       };
     });
-    setNews(newsData);
-  }, []);
 
-  const hideNewsHandler = (id) => {
-    let storedHideData = localStorage.getItem("hideInfo");
-    let hideData = storedHideData === null ? {} : JSON.parse(storedHideData);
-    hideData[id] = true;
-    localStorage.setItem("hideInfo", JSON.stringify(hideData));
+    const dataSortedByVotes = newsData.sort(
+      (firstItem, secondItem) => secondItem.voteUp - firstItem.voteUp
+    );
 
-    let newsInfo = [...news];
-    let index = newsInfo.findIndex((news) => {
-      return news.id === id;
-    });
-    newsInfo[index] = { ...newsInfo[index], isHide: hideData[id] };
-    setNews(newsInfo);
-  };
+    setNews(dataSortedByVotes);
+  }, [pageQuery]);
 
-  const voteUpHandler = (id) => {
-    let storedVoteData = localStorage.getItem("voteUp");
-    let voteData = storedVoteData === null ? {} : JSON.parse(storedVoteData);
-    voteData[id] = voteData[id] ? voteData[id] + 1 : 1;
-    localStorage.setItem("voteUp", JSON.stringify(voteData));
-    let newsInfo = [...news];
-    let index = newsInfo.findIndex((news) => {
-      return news.id === id;
-    });
-    newsInfo[index] = { ...newsInfo[index], voteUp: parseInt(voteData[id]) };
-    setNews(newsInfo);
+  /**
+   * Hide News Handler
+   * @param {} id
+   */
+  const hideNewsHandler = useCallback(
+    (id) => {
+      let storedHideData = localStorage.getItem("hideInfo");
+      let hideData = storedHideData === null ? {} : JSON.parse(storedHideData);
+      hideData[id] = true;
+      localStorage.setItem("hideInfo", JSON.stringify(hideData));
+
+      let newsInfo = [...news];
+      let index = newsInfo.findIndex((news) => {
+        return news.id === id;
+      });
+      newsInfo[index] = { ...newsInfo[index], isHide: hideData[id] };
+      setNews(newsInfo);
+    },
+    [news]
+  );
+
+  /**
+   * Vote Up Handler
+   * @param {} id
+   */
+  const voteUpHandler = useCallback(
+    (id) => {
+      let newsInfo = [...news];
+      let index = newsInfo.findIndex((news) => {
+        return news.id === id;
+      });
+
+      let storedVoteData = localStorage.getItem("voteUp");
+      let voteData = storedVoteData === null ? {} : JSON.parse(storedVoteData);
+      voteData[id] = voteData[id]
+        ? voteData[id] + 1
+        : newsInfo[index].voteUp + 1;
+
+      localStorage.setItem("voteUp", JSON.stringify(voteData));
+      newsInfo[index] = { ...newsInfo[index], voteUp: parseInt(voteData[id]) };
+      setNews(newsInfo);
+    },
+    [news]
+  );
+
+  /**
+   * Tab Handler
+   * @param {} selection
+   */
+  const tabClickHandler = (selection) => {
+    setActiveTab(selection);
   };
 
   const visibleNewsList = news.filter((item) => !item.isHide);
+  console.log("render ....Home......");
 
   return (
     <main>
+      {loading && <Loader></Loader>}
+      <Tabs onTabClick={tabClickHandler} activeTab={activeTab}></Tabs>
       {visibleNewsList.length > 0 && (
         <NewsDetail
+          className={activeTab === "newsList" ? "active-content" : ""}
           news={visibleNewsList}
           pagination={pagination}
           onHideNews={hideNewsHandler}
@@ -85,7 +141,10 @@ function Home() {
         ></NewsDetail>
       )}
       {visibleNewsList.length > 0 && (
-        <UpVoteChart news={visibleNewsList}></UpVoteChart>
+        <UpVoteChart
+          className={activeTab === "voteChart" ? "active-content" : ""}
+          news={visibleNewsList}
+        ></UpVoteChart>
       )}
     </main>
   );

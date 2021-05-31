@@ -1,0 +1,143 @@
+@import "../../constant.scss";
+
+.newsDetails-table {
+  border-collapse: collapse;
+  width: 100%;
+
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #ddd;
+  }
+
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: $orange;
+    color: $white;
+  }
+
+  span.newsItem-source-url {
+    color: $grey;
+    font-size: 0.9em;
+    padding: 0 0.2em;
+  }
+
+  span.newsItem-author {
+    font-size: 0.9em;
+    padding: 0 0.2em;
+  }
+
+  span.newsItem-time {
+    color: $grey;
+    font-size: 0.9em;
+    padding: 0 0.2em;
+  }
+
+  .newsItem-hide {
+    cursor: pointer;
+    padding: 0 0.2em;
+    font-size: 0.9em;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .newsItem-voteUp-td {
+    text-align: center;
+  }
+  .newsItem-voteUp-button {
+    background-image: url("../../images/triangle-fill-black.svg");
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-repeat: no-repeat;
+  }
+  .newsItem-voteUp-td a:hover {
+    background-image: url("../../images/triangle-fill-orange.svg");
+  }
+}
+
+/*
+	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
+	*/
+@media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* Force table to not be like tables anymore */
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    margin: 0 0 1rem 0;
+  }
+
+  tr:nth-child(odd) {
+    background: #ccc;
+  }
+
+  .newsDetails-table td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 38%;
+
+    &:before {
+      /* Now like a table header */
+      position: absolute;
+      /* Top/left values mimic padding */
+      top: 0;
+      left: 6px;
+      width: 30%;
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+  }
+
+  .newsItem-voteUp-td {
+    text-align: left;
+  }
+
+  /*
+		Label the data
+    You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
+		*/
+  .newsDetails-table td:nth-of-type(1):before {
+    content: "S.No";
+  }
+  .newsDetails-table td:nth-of-type(2):before {
+    content: "Comments";
+  }
+  .newsDetails-table td:nth-of-type(3):before {
+    content: "Vote #";
+  }
+  .newsDetails-table td:nth-of-type(4):before {
+    content: "UpVote";
+  }
+  .newsDetails-table td:nth-of-type(5):before {
+    content: "News Details";
+  }
+}

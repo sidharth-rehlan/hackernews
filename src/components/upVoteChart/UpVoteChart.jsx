@@ -1,6 +1,6 @@
 import React from "react";
 import { Chart } from "react-charts";
-import "./style.css";
+import "./style.scss";
 
 function UpVoteChart(props) {
   const chartDate = props.news.map((newsItem, index) => {
@@ -19,10 +19,8 @@ function UpVoteChart(props) {
     { type: "linear", position: "left" },
   ];
 
-  console.log("data.....", data);
-
   return (
-    <section className="upVoteChart">
+    <section className={`upVoteChart ${props.className}`}>
       <Chart data={data} axes={axes} tooltip />
     </section>
   );

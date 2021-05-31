@@ -1,13 +1,11 @@
 import React from "react";
 import NewsItem from "./NewsItem";
 import Pagination from "../../ui/Pagination";
-import "./style.css";
+import "./style.scss";
 
 function NewsDetail(props) {
-  //const newsList = props.news.filter((news) => news.isHide != true);
-
   return (
-    <section className="newsDetails">
+    <section className={`newsDetails ${props.className}`}>
       <table className="newsDetails-table">
         <thead>
           <tr>
@@ -24,15 +22,7 @@ function NewsDetail(props) {
               <NewsItem
                 key={newsItem.id}
                 sno={index + 1}
-                comments={newsItem.points}
-                votes="233"
-                detail={newsItem.title}
-                author={newsItem.author}
-                source={newsItem.url}
-                createdAt={newsItem.created_at}
-                id={newsItem.id}
-                isHide={newsItem.isHide}
-                voteUp={newsItem.voteUp}
+                news={newsItem}
                 onHideNews={props.onHideNews}
                 onVoteUp={props.onVoteUp}
               ></NewsItem>
@@ -40,9 +30,10 @@ function NewsDetail(props) {
           })}
         </tbody>
       </table>
+
       <Pagination pagination={props.pagination}></Pagination>
     </section>
   );
 }
 
-export default NewsDetail;
+export default React.memo(NewsDetail);
