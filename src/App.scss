@@ -41,15 +41,14 @@ section {
       color: $darkOrange;
       font-weight: 700;
     }
+  }
+  .pagination--disable {
+    color: $grey;
+    pointer-events: none;
 
-    .pagination--disable {
+    &:hover {
       color: $grey;
-      pointer-events: none;
-
-      &:hover {
-        color: $grey;
-        font-weight: 400;
-      }
+      font-weight: 400;
     }
   }
 }
