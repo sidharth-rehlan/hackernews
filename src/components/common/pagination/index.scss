@@ -1,0 +1,26 @@
+@import "src/resources/styles/constants.scss";
+
+.pagination {
+  justify-content: flex-end;
+  display: flex;
+
+  a {
+    color: $orange;
+    padding: 0 1.3em;
+    font-size: 1em;
+
+    &:hover {
+      color: $darkOrange;
+      font-weight: 700;
+    }
+  }
+  .pagination--disable {
+    color: $grey;
+    pointer-events: none;
+
+    &:hover {
+      color: $grey;
+      font-weight: 400;
+    }
+  }
+}

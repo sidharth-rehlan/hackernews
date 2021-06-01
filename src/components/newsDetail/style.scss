@@ -1,4 +1,4 @@
-@import "../../constant.scss";
+@import "src/resources/styles/constants.scss";
 
 .newsDetails-table {
   border-collapse: collapse;
@@ -57,14 +57,14 @@
     text-align: center;
   }
   .newsItem-voteUp-button {
-    background-image: url("../../images/triangle-fill-black.svg");
+    background-image: url("../../resources/images/triangle-fill-black.svg");
     width: 20px;
     height: 20px;
     display: inline-block;
     background-repeat: no-repeat;
   }
-  .newsItem-voteUp-td a:hover {
-    background-image: url("../../images/triangle-fill-orange.svg");
+  .newsItem-voteUp-td span:hover {
+    background-image: url("../../resources/images/triangle-fill-orange.svg");
   }
 }
 

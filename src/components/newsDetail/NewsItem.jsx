@@ -18,28 +18,32 @@ function NewsItem(props) {
       <td>{num_comments}</td>
       <td>{voteUp}</td>
       <td className="newsItem-voteUp-td">
-        <a
-          className="newsItem-voteUp-button"
+        <span
+          className="newsItem-voteUp-button cursor-pointer"
           role="button"
+          title="UpVote"
           onClick={() => {
             props.onVoteUp(id);
           }}
-        ></a>
+        />
       </td>
       <td>
         {title}
-        <span className="newsItem-source-url">({source})</span>
+        <span className="newsItem-source-url">
+          (<a href={url}>{source}</a>)
+        </span>
         <span className="newsItem-author"> by {author}</span>
         <span className="newsItem-time"> {formatedTime} ago</span>
-        <a
+        <span
           role="button"
-          className="newsItem-hide"
+          title="Hide"
+          className="newsItem-hide cursor-pointer"
           onClick={() => {
             props.onHideNews(id);
           }}
         >
           [Hide]
-        </a>
+        </span>
       </td>
     </tr>
   );

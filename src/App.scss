@@ -1,4 +1,4 @@
-@import "./constant.scss";
+@import "src/resources/styles/constants.scss";
 
 body {
   margin: auto;
@@ -28,31 +28,6 @@ section {
   margin-bottom: 2rem;
 }
 
-.pagination {
-  justify-content: flex-end;
-  display: flex;
-
-  a {
-    color: $orange;
-    padding: 0 1.3em;
-    font-size: 1em;
-
-    &:hover {
-      color: $darkOrange;
-      font-weight: 700;
-    }
-  }
-  .pagination--disable {
-    color: $grey;
-    pointer-events: none;
-
-    &:hover {
-      color: $grey;
-      font-weight: 400;
-    }
-  }
-}
-
 .tab {
   display: none;
 
@@ -75,7 +50,7 @@ section {
   top: 10em;
 
   .loader-animation {
-    background: url(../src/images/loader.svg) no-repeat;
+    background: url("./resources/images/loader.svg") no-repeat;
     width: 100px;
     height: 100px;
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import NewsItem from "./NewsItem";
-import Pagination from "../../ui/Pagination";
+import Pagination from "../common/pagination";
 import "./style.scss";
 
 function NewsDetail(props) {

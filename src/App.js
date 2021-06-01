@@ -7,6 +7,7 @@ function App() {
   return (
     <div>
       <Switch>
+        {/* Do we really need a switch? */}
         <Route exact path="/">
           <Home />
         </Route>
