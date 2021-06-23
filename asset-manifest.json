@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/hackernews/static/css/main.b0991c57.chunk.css",
+    "main.js": "/hackernews/static/js/main.d68a35b7.chunk.js",
+    "main.js.map": "/hackernews/static/js/main.d68a35b7.chunk.js.map",
+    "runtime-main.js": "/hackernews/static/js/runtime-main.09911ca0.js",
+    "runtime-main.js.map": "/hackernews/static/js/runtime-main.09911ca0.js.map",
+    "static/js/2.bb318883.chunk.js": "/hackernews/static/js/2.bb318883.chunk.js",
+    "static/js/2.bb318883.chunk.js.map": "/hackernews/static/js/2.bb318883.chunk.js.map",
+    "static/js/3.3c97540a.chunk.js": "/hackernews/static/js/3.3c97540a.chunk.js",
+    "static/js/3.3c97540a.chunk.js.map": "/hackernews/static/js/3.3c97540a.chunk.js.map",
+    "index.html": "/hackernews/index.html",
+    "static/css/main.b0991c57.chunk.css.map": "/hackernews/static/css/main.b0991c57.chunk.css.map",
+    "static/js/2.bb318883.chunk.js.LICENSE.txt": "/hackernews/static/js/2.bb318883.chunk.js.LICENSE.txt",
+    "static/media/App.scss": "/hackernews/static/media/loader.1682a307.svg",
+    "static/media/style.scss": "/hackernews/static/media/triangle-fill-orange.159a3239.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.09911ca0.js",
+    "static/js/2.bb318883.chunk.js",
+    "static/css/main.b0991c57.chunk.css",
+    "static/js/main.d68a35b7.chunk.js"
+  ]
+}
